@@ -16,7 +16,7 @@ const Product: React.FC<ProductProps> = ({ product, onClick }) => {
 
   return (
     <button onClick={handleClick} className="flex flex-col text-left bg-transparent border-0 shadow-lg rounded-md scale-100 transition-all duration-500 p-2 hover:scale-105">
-      <div className="pointer-events-none">
+      <div className="pointer-events-auto">
         <img 
           className="w-full h-60 object-center object-cover rounded-md"
           src={product.images[0]}

@@ -5,6 +5,7 @@ import SEO from '@/components/SEO';
 import { GetStaticPropsContext } from 'next';
 import React from 'react';
 import { Carousel } from 'react-responsive-carousel';
+import { parsePrice } from '@/utils/parsePrice';
 
 interface ProductDetailProps {
   product: ProductModel;
@@ -19,7 +20,7 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ product }) => {
       <div>
         <Header />
 
-        <main className="flex justify-center my-9 px-8 rounded-lg w-full">
+        <main className="flex justify-center my-9 px-8 rounded-lg w-full pb-12">
           <div className="max-w-6xl w-full flex-col md:flex-row flex justify-between">
             <div className="flex flex-col w-full md:w-[60%]">
               <div className="flex justify-center p-4 bg-white rounded-lg shadow-lg">
@@ -39,23 +40,16 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ product }) => {
               <div className="mt-8 p-4 bg-white rounded-lg text-gray-600 shadow-lg">
                 <h1 className="text-3xl mb-8 text-gray-700">Descrição</h1>
 
-                <p className="mb-4">
-                  Lorem ipsum dolor sit, amet consectetur adipisicing elit. Magni voluptatibus earum doloribus labore minima doloremque, maiores voluptates nisi voluptas dolorem, libero quam ipsa fugiat facere sed tempore accusamus. Officia, sint!
+                <p className="">
+                  {product.description}
                 </p>
-
-                <ul className="list-disc ml-8">
-                  <li>Lorem ipsum dolor sit amet consectetur</li>
-                  <li>Lorem ipsum dolor sit amet consectetur</li>
-                  <li>Lorem ipsum dolor sit amet consectetur</li>
-                  <li>Lorem ipsum dolor sit amet consectetur</li>
-                </ul>
               </div>
             </div>
 
             <div className="w-full md:w-[40%] mt-12 md:mt-0 md:ml-12 bg-white rounded-lg p-4 h-fit shadow-lg">
-              <h1 className="text-3xl text-gray-700">Calça Jogger {'"'}All Black{'"'} Nova Coleção</h1>
+              <h1 className="text-3xl text-gray-700">{product.title}</h1>
 
-              <h2 className="my-4 text-xl text-green-600">Preço: <span>R$ 98,00</span></h2>
+              <h2 className="my-4 text-xl text-green-600">Preço: <span>{parsePrice(product.price)}</span></h2>
 
               <div className="flex flex-col md:flex-row">
                 <button className="bg-primary px-3 py-2 flex items-center text-white rounded-md shadow-lg border-black border-2 transition-all duration-500 brightness-100 hover:brightness-125">
