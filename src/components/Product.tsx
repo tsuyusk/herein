@@ -23,10 +23,10 @@ const Product: React.FC<ProductProps> = ({ product, onClick }) => {
           alt={product.title}
         />
       
-        <div className="p-2 flex flex-col justify-between h-full">
-          <h1 className="max-w-[70%] text-gray-600">{product.title}</h1>
+        <div className="p-2 flex flex-col justify-between">
+          <h1 className="text-md max-w-[70%] text-gray-600">{product.title}</h1>
 
-          <p className="text-gray-400 my-2 w-[calc(240px-16px)] h-24 text-ellipsis whitespace-wrap overflow-x-hidden">
+          <p className="text-gray-400 my-4 text-sm w-[calc(240px-16px)] h-24 text-ellipsis whitespace-wrap overflow-x-hidden">
             {product.description}
           </p>
 

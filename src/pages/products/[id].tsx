@@ -11,6 +11,7 @@ interface ProductDetailProps {
 }
 
 const ProductDetail: React.FC<ProductDetailProps> = ({ product }) => {
+
   return (
     <>
       <SEO />
@@ -18,19 +19,21 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ product }) => {
       <div>
         <Header />
 
-        <main className="flex justify-center my-9 rounded-lg w-full">
-          <div className="max-w-6xl w-full flex justify-between">
-            <div className="flex flex-col w-[60%]">
+        <main className="flex justify-center my-9 px-8 rounded-lg w-full">
+          <div className="max-w-6xl w-full flex-col md:flex-row flex justify-between">
+            <div className="flex flex-col w-full md:w-[60%]">
               <div className="flex justify-center p-4 bg-white rounded-lg shadow-lg">
-                <Carousel width={360}>
-                  <div>
-                    <img src={product.images[0]} alt={product.title} width={360} />
-                  </div>
+                <div className="w-full md:w-[360px]">
+                  <Carousel width="100%">
+                    <div>
+                      <img src={product.images[0]} alt={product.title} width={360} />
+                    </div>
 
-                  <div>
-                    <img src={product.images[0]} alt={product.title} width={360} />
-                  </div>
-                </Carousel>
+                    <div>
+                      <img src={product.images[0]} alt={product.title} width={360} />
+                    </div>
+                  </Carousel>
+                </div>
               </div>
 
               <div className="mt-8 p-4 bg-white rounded-lg text-gray-600 shadow-lg">
@@ -49,18 +52,18 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ product }) => {
               </div>
             </div>
 
-            <div className="w-[40%] ml-12 bg-white rounded-lg p-4 h-fit shadow-lg">
+            <div className="w-full md:w-[40%] mt-12 md:mt-0 md:ml-12 bg-white rounded-lg p-4 h-fit shadow-lg">
               <h1 className="text-3xl text-gray-700">Calça Jogger {'"'}All Black{'"'} Nova Coleção</h1>
 
               <h2 className="my-4 text-xl text-green-600">Preço: <span>R$ 98,00</span></h2>
 
-              <div className="flex">
+              <div className="flex flex-col md:flex-row">
                 <button className="bg-primary px-3 py-2 flex items-center text-white rounded-md shadow-lg border-black border-2 transition-all duration-500 brightness-100 hover:brightness-125">
                   <MdArrowRightAlt className="mr-1" />
                   Comprar
                 </button>
 
-                <button className="bg-white px-3 py-2 flex items-center text-primary rounded-md shadow-lg border-primary ml-4 border-2 transition-all duration-500 brightness-100 hover:brightness-75">
+                <button className="bg-white px-3 py-2 flex items-center text-primary rounded-md shadow-lg border-primary mt-4 md:mt-0 md:ml-4 border-2 transition-all duration-500 brightness-100 hover:brightness-75">
                   <MdShoppingCart className="mr-1" />
                   Adicionar ao Carrinho
                 </button>
