@@ -29,7 +29,7 @@ const Category: React.FC<CategoryProps> = ({ category, products }) => {
 
   return (
     <>
-      <SEO />
+      <SEO title={category.title} />
 
       <div>
         <Header activeIndex={pickFromObject(possibleCategoriesIndexes, category.slug)} />

@@ -21,7 +21,7 @@ export default function Home({ products }: HomeProps) {
 
   return (
     <>
-      <SEO />
+      <SEO shouldExcludeTitleSuffix />
 
       <div className="pb-4">
         <Header activeIndex={0} />

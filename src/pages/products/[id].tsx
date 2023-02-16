@@ -16,7 +16,7 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ product }) => {
 
   return (
     <>
-      <SEO />
+      <SEO title={product.title} />
 
       <div>
         <Header />

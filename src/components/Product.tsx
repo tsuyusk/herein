@@ -24,9 +24,9 @@ const Product: React.FC<ProductProps> = ({ product, onClick }) => {
         />
       
         <div className="p-2 flex flex-col">
-          <h1 className="text-md max-w-full md:max-w-[70%] text-gray-600">{product.title}</h1>
+          <h1 className="text-md max-w-full text-gray-600">{product.title}</h1>
 
-          <h2 className="text-green-400 text-xl">{parsePrice(product.price)}</h2>
+          <h2 className="text-green-400 text-xl mt-auto">{parsePrice(product.price)}</h2>
         </div>
       </div>
     </button>
