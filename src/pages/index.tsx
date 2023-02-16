@@ -50,7 +50,7 @@ export default function Home({ products }: HomeProps) {
 
               <h1 className="relative text-2xl font-bold mt-6 mb-8 w-fit after:content-[''] after:absolute after:left-0 after:-bottom-1 after:h-1 after:w-[110%] after:bg-primary">Nossos Produtos</h1>
 
-              <div className="grid auto-rows-auto grid-cols-[repeat(auto-fill,240px)] gap-8">
+              <div className="grid w-full auto-rows-auto grid-cols-[repeat(auto-fit,_140px)] justify-center md:justify-start gap-2 md:grid-cols-[repeat(auto-fill,240px)] md:gap-8">
                 {products.map(product => (
                   <Product
                     key={product.id}

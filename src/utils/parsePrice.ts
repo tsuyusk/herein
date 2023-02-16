@@ -1,5 +1,6 @@
 export function parsePrice(price: number) {
-  let parsedPrice = `R$ ${price.toString().replace('.', ',')}`
-
-  return parsedPrice
+  return new Intl.NumberFormat('pt-BR', {
+    style: 'currency',
+    currency: 'BRL'
+  }).format(price)
 }
