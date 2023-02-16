@@ -55,3 +55,11 @@ a[data-active='true']::after {
   transform: scale(1);
   transform-origin: center;
 }
+
+a[data-active='true'] {
+  color: #7507a6;
+}
+
+a[data-active='true']::after {
+  background: #7507a6;
+}

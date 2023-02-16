@@ -2,7 +2,11 @@ import React from 'react';
 import Link from 'next/link';
 import { MdShoppingCart } from 'react-icons/md';
 
-const Header: React.FC = () => {
+interface HeaderProps {
+  activeIndex?: number;
+}
+
+const Header: React.FC<HeaderProps> = ({ activeIndex = -1 }) => {
   return (
     <header className="flex justify-center w-100 py-6 bg-gray-800">
       <div className="max-w-6xl w-full flex justify-between items-center px-8">
@@ -17,13 +21,13 @@ const Header: React.FC = () => {
             
 
           <div className="hidden md:visible md:flex">
-            <Link className="text-primary after:bg-primary" href="/main.html">Home</Link>
+            <Link data-active={String(activeIndex === 0)} href="/">Home</Link>
             <span className="mx-3">/</span>
-            <Link href="/camisas">Camisas e calças</Link>
+            <Link data-active={String(activeIndex === 1)} href="/categorias/camisas-e-calcas">Camisas e calças</Link>
             <span className="mx-3">/</span>
-            <Link href="/tenis">Tênis</Link>
+            <Link data-active={String(activeIndex === 2)} href="/categorias/tenis">Tênis</Link>
             <span className="mx-3">/</span>
-            <Link href="/acessorios">Acessorios</Link>
+            <Link data-active={String(activeIndex === 3)} href="/categorias/acessorios">Acessorios</Link>
           </div>
         </nav>
       </div>

@@ -2,6 +2,8 @@ import { ProductModel } from "@/@types/models";
 import Header from "@/components/Header";
 import Product from "@/components/Product";
 import SEO from "@/components/SEO";
+import { products as productsData } from "@/pages/api/data";
+import { parseProducts } from "@/utils/parseProducts";
 import { useRouter } from "next/router";
 import { useCallback } from "react";
 import { Carousel } from 'react-responsive-carousel';
@@ -13,7 +15,7 @@ interface HomeProps {
 export default function Home({ products }: HomeProps) {
   const router = useRouter();
 
-  const handleGoToProductdescription = useCallback((id: string) => {
+  const handleGoToProductDescription = useCallback((id: string) => {
     router.push(`/products/${id}`);
   }, [router]);
 
@@ -22,7 +24,7 @@ export default function Home({ products }: HomeProps) {
       <SEO />
 
       <div className="pb-4">
-        <Header />
+        <Header activeIndex={0} />
 
         <main className="flex justify-center my-9 rounded-lg w-full">
           <div className="max-w-6xl w-full flex justify-between items-center">
@@ -53,7 +55,7 @@ export default function Home({ products }: HomeProps) {
                   <Product
                     key={product.id}
                     product={product}
-                    onClick={handleGoToProductdescription}
+                    onClick={handleGoToProductDescription}
                   />
                 ))}
               </div>
@@ -66,19 +68,7 @@ export default function Home({ products }: HomeProps) {
 }
 
 export async function getServerSideProps() {
-  const responses = await Promise.all([fetch("https://fakestoreapi.com/products/category/men's clothing"), fetch("https://fakestoreapi.com/products/category/women's clothing")]);
-
-  let data = await Promise.all(responses.map(response => response.json()));
-
-  data = [...data[0], ...data[1]]
-
-  const products: ProductModel[] = data.map((product: any) => ({
-    id: product.id,
-    images: [product.image],
-    price: product.price,
-    title: product.title,
-    description: product.description,
-  }));
+  const products: ProductModel[] = parseProducts(productsData);
 
   return {
     props: { products },

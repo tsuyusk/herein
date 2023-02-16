@@ -5,3 +5,9 @@ export interface ProductModel {
   price: number
   images: string[]
 }
+
+export interface CategoryModel {
+  id: string
+  title: string
+  slug: string
+}
