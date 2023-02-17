@@ -54,7 +54,7 @@ const Header: React.FC<HeaderProps> = ({ activeIndex = -1 }) => {
                 <MdClose size={24} />
               </button>
 
-              <Link href="/cart" className="relative bg-transparent border-0 mr-8 brightness-100 transition-all duration-500 hover:brightness-75">
+              <Link href="/cart" className="relative bg-transparent border-0 mt-8 brightness-100 transition-all duration-500 hover:brightness-75">
                 <MdShoppingCart size={24} />
 
                 <span className="absolute -left-2 -bottom-2">{amountOfItems}</span>
