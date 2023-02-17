@@ -1,4 +1,5 @@
 import { ProductModel, CategoryModel } from '@/@types/models';
+import Footer from '@/components/Footer';
 import Header from '@/components/Header';
 import Product from '@/components/Product';
 import SEO from '@/components/SEO';
@@ -51,6 +52,8 @@ const Category: React.FC<CategoryProps> = ({ category, products }) => {
             </div>
           </div>
         </main>
+
+        <Footer />
       </div>
     </>
   );

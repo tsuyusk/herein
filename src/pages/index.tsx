@@ -1,4 +1,5 @@
 import { ProductModel } from "@/@types/models";
+import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import Product from "@/components/Product";
 import SEO from "@/components/SEO";
@@ -23,10 +24,10 @@ export default function Home({ products }: HomeProps) {
     <>
       <SEO shouldExcludeTitleSuffix />
 
-      <div className="pb-4">
+      <div>
         <Header activeIndex={0} />
 
-        <main className="flex justify-center my-9 rounded-lg w-full">
+        <main className="flex justify-center rounded-lg w-full my-9">
           <div className="max-w-6xl w-full flex justify-between items-center">
             <div className="flex flex-col items-center md:items-stretch w-full">
               <div className="w-full">
@@ -62,6 +63,8 @@ export default function Home({ products }: HomeProps) {
             </div>
           </div>
         </main>
+
+        <Footer />
       </div>
     </>
   )

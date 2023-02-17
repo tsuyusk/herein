@@ -1,3 +1,4 @@
+import Footer from '@/components/Footer';
 import Header from '@/components/Header';
 import Product from '@/components/Product';
 import SEO from '@/components/SEO';
@@ -22,12 +23,12 @@ const Cart: React.FC = () => {
     <>
       <SEO title="Seu Carrinho" />
 
-      <div className="pb-4">
+      <div className="h-full">
         <Header />
 
         <main className="flex justify-center my-9 rounded-lg w-full">
           <div className="max-w-6xl w-full flex justify-between items-center">
-            <div className="flex flex-col md:flex-row w-full justify-between px-8 md:px-0">
+            <div className="flex flex-col md:flex-row w-full justify-between px-8 md:px-0 min-h-[30vw]">
               <div className="flex flex-col w-full md:w-[60%]">
                 <h1 className="relative text-2xl font-bold mt-6 mb-8 w-fit after:content-[''] after:absolute after:left-0 after:-bottom-1 after:h-1 after:w-[110%] after:bg-primary">Seu carrinho</h1>
 
@@ -81,6 +82,8 @@ const Cart: React.FC = () => {
             </div>
           </div>
         </main>
+
+        <Footer />
       </div>
     </>
   );

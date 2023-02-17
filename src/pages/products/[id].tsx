@@ -8,6 +8,7 @@ import React from 'react';
 import { Carousel } from 'react-responsive-carousel';
 import { parsePrice } from '@/utils/parsePrice';
 import { useCart } from '@/hooks/cart';
+import Footer from '@/components/Footer';
 
 interface ProductDetailProps {
   product: ProductModel;
@@ -63,6 +64,8 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ product }) => {
             </div>
           </div>
         </main>
+
+        <Footer />
       </div>
     </>
   )
