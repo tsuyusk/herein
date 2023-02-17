@@ -1,16 +1,27 @@
-import { ProductModel } from '@/@types/models';
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useEffect, useMemo, useState } from 'react';
+
+interface ProductModel {
+  id: string;
+  title: string;
+  description: string;
+  price: number;
+  images: string[];
+}
 
 interface CartItem extends ProductModel {
   quantity: number;
 }
 
 interface CartContextType {
+  totalPrice: number;
+  amountOfItems: number;
   items: CartItem[];
   addItem: (item: ProductModel) => void;
-  removeItem: (id: string) => void;
+  removeItem: (item: CartItem) => void;
   clearCart: () => void;
 }
+
+const CART_STORAGE_KEY = '@herein/cart';
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
@@ -31,6 +42,21 @@ interface CartProviderProps {
 export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
   const [items, setItems] = useState<CartItem[]>([]);
 
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const storedItems = localStorage.getItem(CART_STORAGE_KEY);
+      if (storedItems) {
+        setItems(JSON.parse(storedItems));
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(items));
+    }
+  }, [items]);
+
   const addItem = (item: ProductModel) => {
     const existingItem = items.find((i) => i.id === item.id);
 
@@ -44,20 +70,41 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
     }
   };
 
-  const removeItem = (id: string) => {
-    const updatedItems = items.filter((i) => i.id !== id);
-    setItems(updatedItems);
+  const removeItem = (item: CartItem) => {    
+    setItems(state => {
+      const newState = [...state];
+
+      if (item.quantity === 1) {
+        return newState.filter((i) => i.id !== item.id);
+      } else {
+        const itemIndex = newState.findIndex((i) => i.id === item.id);
+
+        newState[itemIndex] = { ...item, quantity: item.quantity - 1 };
+
+        return newState;
+      }
+    });
   };
 
   const clearCart = () => {
     setItems([]);
   };
 
+  const amountOfItems = useMemo(() => {
+    return items.reduce((acc, cur) => acc + cur.quantity, 0);
+  }, [items]);
+
+  const totalPrice = useMemo(() => {
+    return items.reduce((acc, cur) => acc + (cur.price * cur.quantity), 0);
+  }, [items]);
+
   const contextValue: CartContextType = {
     items,
     addItem,
     removeItem,
     clearCart,
+    amountOfItems,
+    totalPrice,
   };
 
   return <CartContext.Provider value={contextValue}>{children}</CartContext.Provider>;

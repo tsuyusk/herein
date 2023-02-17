@@ -7,12 +7,14 @@ import { GetStaticPropsContext } from 'next';
 import React from 'react';
 import { Carousel } from 'react-responsive-carousel';
 import { parsePrice } from '@/utils/parsePrice';
+import { useCart } from '@/hooks/cart';
 
 interface ProductDetailProps {
   product: ProductModel;
 }
 
 const ProductDetail: React.FC<ProductDetailProps> = ({ product }) => {
+  const { addItem } = useCart();
 
   return (
     <>
@@ -53,7 +55,7 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ product }) => {
               <h2 className="my-4 text-xl text-green-600">Preço: <span>{parsePrice(product.price)}</span></h2>
 
               <div className="flex flex-col md:flex-row">
-                <button className="bg-white px-3 py-2 flex items-center text-primary rounded-md shadow-lg border-primary border-2 transition-all duration-500 hover:text-white hover:bg-primary">
+                <button onClick={() => addItem(product)} className="bg-white px-3 py-2 flex items-center text-primary rounded-md shadow-lg border-primary border-2 transition-all duration-500 hover:text-white hover:bg-primary">
                   <MdShoppingCart className="mr-1" />
                   Adicionar ao Carrinho
                 </button>

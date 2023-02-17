@@ -39,7 +39,7 @@ const Category: React.FC<CategoryProps> = ({ category, products }) => {
             <div className="flex flex-col w-full">
               <h1 className="relative text-2xl font-bold mt-6 mb-8 w-fit after:content-[''] after:absolute after:left-0 after:-bottom-1 after:h-1 after:w-[110%] after:bg-primary">{category.title}</h1>
 
-              <div className="grid auto-rows-auto grid-cols-[repeat(auto-fill,240px)] gap-8">
+              <div className="grid w-full auto-rows-auto grid-cols-[repeat(auto-fit,_140px)] justify-center md:justify-start gap-2 md:grid-cols-[repeat(auto-fill,240px)] md:gap-8">
                 {products.map(product => (
                   <Product
                     key={product.id}
@@ -72,8 +72,6 @@ export async function getStaticPaths() {
 export async function getStaticProps(context: GetStaticPropsContext) {
   const paramCategory = context.params?.category;
   
-  console.log(paramCategory)
-
   if (!paramCategory || typeof paramCategory !== 'string') {
     throw new Error('Invalid ID')
   }

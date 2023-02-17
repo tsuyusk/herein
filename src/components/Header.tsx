@@ -2,12 +2,14 @@ import React, { useCallback, useState } from 'react';
 import Link from 'next/link';
 import { MdShoppingCart, MdMenu, MdClose } from 'react-icons/md';
 import Drawer from 'react-modern-drawer';
+import { useCart } from '@/hooks/cart';
 
 interface HeaderProps {
   activeIndex?: number;
 }
 
 const Header: React.FC<HeaderProps> = ({ activeIndex = -1 }) => {
+  const { amountOfItems } = useCart();
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleDrawer = useCallback(() => {
@@ -23,8 +25,10 @@ const Header: React.FC<HeaderProps> = ({ activeIndex = -1 }) => {
   
         <nav className="flex align-center justify-center flex-wrap text-white">
           <div className="hidden md:visible md:flex">
-            <Link href="/cart" className="bg-transparent border-0 mr-4 brightness-100 transition-all duration-500 hover:brightness-75">
+            <Link href="/cart" className="relative bg-transparent border-0 mr-8 brightness-100 transition-all duration-500 hover:brightness-75">
               <MdShoppingCart size={24} />
+
+              <span className="absolute -left-2 -bottom-2">{amountOfItems}</span>
             </Link>
 
             <Link data-active={String(activeIndex === 0)} href="/">Home</Link>
@@ -50,8 +54,10 @@ const Header: React.FC<HeaderProps> = ({ activeIndex = -1 }) => {
                 <MdClose size={24} />
               </button>
 
-              <Link href="/cart" className="bg-transparent border-0 mt-4 brightness-100 transition-all duration-500 hover:brightness-75">
+              <Link href="/cart" className="relative bg-transparent border-0 mr-8 brightness-100 transition-all duration-500 hover:brightness-75">
                 <MdShoppingCart size={24} />
+
+                <span className="absolute -left-2 -bottom-2">{amountOfItems}</span>
               </Link>
 
               <Link data-active={String(activeIndex === 0)} className="mt-4" href="/">Home</Link>
