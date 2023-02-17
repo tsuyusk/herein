@@ -20,7 +20,7 @@ const Footer: React.FC<FooterProps> = ({ }) => {
           <div className="flex flex-col items-center my-8">
             <p>Nós aceitamos</p>
 
-            <div className="flex space-x-4 mt-4">
+            <div className="flex flex-wrap space-x-1 mt-4">
               <img src="/assets/payment-methods/amex.svg" alt="Amex" />
               <img src="/assets/payment-methods/boleto.svg" alt="Boleto" />
               <img src="/assets/payment-methods/elo.svg" alt="Elo" />

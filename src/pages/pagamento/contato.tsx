@@ -10,7 +10,9 @@ const Contact: React.FC = () => {
   const router = useRouter();
 
   if (step !== 1) {
-    router.push('/');
+    if (typeof window !== 'undefined') {
+      router.push('/');
+    }
 
     return null;
   }
