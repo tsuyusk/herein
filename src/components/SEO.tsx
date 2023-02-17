@@ -8,16 +8,16 @@ interface SEOProps {
   shouldIndexPage?: boolean;
 }
 
-const defaultDescription = 'A HeroIn Lorem ipsum dolor sit amet consectetur adipisicing elit.';
+const defaultDescription = 'A HereIn Lorem ipsum dolor sit amet consectetur adipisicing elit.';
 
 export default function SEO({
-  title = 'HeroIn',
+  title = 'HereIn',
   description = defaultDescription,
   image,
   shouldExcludeTitleSuffix = false,
   shouldIndexPage = true,
 }: SEOProps) {
-  const pageTitle = `${title} ${shouldExcludeTitleSuffix ? '' : '| Heroin'}`;
+  const pageTitle = `${title} ${shouldExcludeTitleSuffix ? '' : '| Herein'}`;
   const pageImage = image ? `${process.env.NEXT_PUBLIC_SITE_URL}/${image}` : undefined;
 
   return (
@@ -49,8 +49,8 @@ export default function SEO({
 
       <meta name="twitter:title" content={pageTitle} />
       <meta name="twitter:card" content="summary_large_image" />
-      <meta name="twitter:site" content="@heroin" />
-      <meta name="twitter:creator" content="@heroin" />
+      <meta name="twitter:site" content="@herein" />
+      <meta name="twitter:creator" content="@herein" />
       <meta name="twitter:image" content={pageImage} />
       <meta name="twitter:image:src" content={pageImage} />
       <meta name="twitter:image:alt" content="Thumbnail" />

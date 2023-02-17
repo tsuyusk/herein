@@ -37,7 +37,7 @@ const Category: React.FC<CategoryProps> = ({ category, products }) => {
 
         <main className="flex justify-center my-9 rounded-lg w-full">
           <div className="max-w-6xl w-full flex justify-between items-center">
-            <div className="flex flex-col w-full">
+            <div className="flex flex-col items-center md:items-stretch w-full">
               <h1 className="relative text-2xl font-bold mt-6 mb-8 w-fit after:content-[''] after:absolute after:left-0 after:-bottom-1 after:h-1 after:w-[110%] after:bg-primary">{category.title}</h1>
 
               <div className="grid w-full auto-rows-auto grid-cols-[repeat(auto-fit,_140px)] justify-center md:justify-start gap-2 md:grid-cols-[repeat(auto-fill,240px)] md:gap-8">
