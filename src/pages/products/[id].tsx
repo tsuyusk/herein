@@ -1,5 +1,5 @@
 import { ProductModel } from '@/@types/models';
-import { MdShoppingCart, MdArrowRightAlt } from 'react-icons/md';
+import { MdShoppingCart, MdArrowRightAlt, MdLocalShipping, MdShield } from 'react-icons/md';
 import Header from '@/components/Header';
 import SEO from '@/components/SEO';
 import { products } from '@/pages/api/data';
@@ -60,6 +60,32 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ product }) => {
                   <MdShoppingCart className="mr-1" />
                   Adicionar ao Carrinho
                 </button>
+              </div>
+
+              <div className="bg-gray-600 p-4 w-full mt-8 rounded-lg">
+                <div className="flex items-start text-white">
+                  <MdLocalShipping className="mr-1" />
+                  <p className="text-xs">
+                    <span className="text-blue-400 text-base">Frete Gratis</span>. Enviado pelos Correios.
+                  </p>
+                </div>
+
+                <div className="flex items-start text-white mt-2">
+                  <MdLocalShipping className="mr-1" />
+                  <p className="text-xs">
+                    <span className="text-blue-400 text-base">Frete Power</span> Até 9 dias apartir do seu pagamento 
+
+                    <h2 className="text-green-400">+12R$</h2>
+                  </p>
+                </div>
+
+                <div className="flex items-start text-white mt-2">
+                  <MdShield className="mr-1" />
+
+                  <p className="text-xs">
+                    <span className="text-blue-400 text-base">Compra Gratuita.</span> Saia satisfeito ou devolvemos o dinheiro
+                  </p>
+                </div>
               </div>
             </div>
           </div>

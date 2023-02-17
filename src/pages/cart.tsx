@@ -3,12 +3,14 @@ import Header from '@/components/Header';
 import Product from '@/components/Product';
 import SEO from '@/components/SEO';
 import { useCart } from '@/hooks/cart';
+import { useCheckout } from '@/hooks/checkout';
 import { parsePrice } from '@/utils/parsePrice';
 import { useRouter } from 'next/router';
 import React, { useCallback } from 'react';
 import { MdArrowLeft, MdArrowUpward } from 'react-icons/md';
 
 const Cart: React.FC = () => {
+  const { advanceStep } = useCheckout();
   const { items, addItem, removeItem, totalPrice } = useCart();
   const router = useRouter();
 
@@ -17,7 +19,10 @@ const Cart: React.FC = () => {
   }, [router]);
 
   const handleGoToCheckout = useCallback(() => {
-  }, []);
+    advanceStep()
+
+    router.push('/pagamento/contato');
+  }, [router, advanceStep]);
 
   return (
     <>

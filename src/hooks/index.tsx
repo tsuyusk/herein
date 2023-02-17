@@ -1,5 +1,6 @@
 import React from "react"
 import { CartProvider } from "./cart";
+import { CheckoutProvider } from "./checkout";
 
 interface RootProviderProps {
   children: React.ReactElement;
@@ -8,7 +9,9 @@ interface RootProviderProps {
 export function RootProvider({ children }: RootProviderProps) {
   return (
     <CartProvider>
-      {children}
+      <CheckoutProvider>
+        {children}
+      </CheckoutProvider>
     </CartProvider>
   );
 }
