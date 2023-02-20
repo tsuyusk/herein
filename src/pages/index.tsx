@@ -7,7 +7,6 @@ import { products as productsData } from "@/pages/api/data";
 import { GET_ALL_PRODUCTS } from "@/apollo/queries/services/shopify";
 import { client } from "@/apollo/client";
 import { getAllProducts } from "@/services/shopify";
-import { parseProduct } from "@/utils/parseProduct";
 import { useRouter } from "next/router";
 import { useCallback } from "react";
 import { Carousel } from 'react-responsive-carousel';
