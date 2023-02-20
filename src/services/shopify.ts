@@ -3,7 +3,8 @@ import {
   GET_ALL_PRODUCTS_FROM_COLLECTION,
   GET_ALL_COLLECTIONS_NAMES,
   GET_ALL_PRODUCTS,
-  GET_PRODUCT_BY_HANDLE
+  GET_PRODUCT_BY_HANDLE,
+  CREATE_CHECKOUT
 } from '@/apollo/queries/services/shopify'
 import { client } from '../apollo/client'
 
@@ -19,6 +20,7 @@ export function parseProduct(product: any): ProductModel {
     description: data.description,
     title: data.title,
     price,
+    variants: data.variants.edges.map((variant: any) => variant.node.id),
     images: data.images.edges.map((image: any) => image.node.url)
   }
 }
@@ -74,4 +76,21 @@ export async function getCollectionWithProductsByHandle(
   })
 
   return parseCollection(shopifyCollections.data.collectionByHandle)
+}
+
+interface CreateCheckoutResponse {
+  checkoutCreate: {
+    checkout: {
+      webUrl: string
+    }
+  }
+}
+
+export async function createCheckout(input: any) {
+  return (
+    await client.mutate<CreateCheckoutResponse>({
+      mutation: CREATE_CHECKOUT,
+      variables: { input }
+    })
+  ).data?.checkoutCreate
 }

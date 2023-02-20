@@ -5,6 +5,7 @@ export interface ProductModel {
   title: string
   description: string
   price: number
+  variants: string[]
   images: string[]
 }
 

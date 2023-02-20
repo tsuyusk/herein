@@ -18,6 +18,13 @@ const productData = `
       }
     }
   }
+  variants(first: 5) {
+    edges {
+      node {
+        id
+      }
+    }
+  }
 `
 
 export const GET_ALL_PRODUCTS = gql`
@@ -64,6 +71,17 @@ export const GET_ALL_PRODUCTS_FROM_COLLECTION = gql`
         nodes {
           ${productData}
         }
+      }
+    }
+  }
+`
+
+export const CREATE_CHECKOUT = gql`
+  mutation createCheckout($input: CheckoutCreateInput!) {
+    checkoutCreate(input: $input) {
+      checkout {
+        id
+        webUrl
       }
     }
   }

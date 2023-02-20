@@ -4,6 +4,7 @@ import Product from '@/components/Product';
 import SEO from '@/components/SEO';
 import { useCart } from '@/hooks/cart';
 import { useCheckout } from '@/hooks/checkout';
+import { createCheckout } from '@/services/shopify';
 import { parsePrice } from '@/utils/parsePrice';
 import { useRouter } from 'next/router';
 import React, { useCallback } from 'react';
@@ -14,15 +15,26 @@ const Cart: React.FC = () => {
   const { items, addItem, removeItem, totalPrice } = useCart();
   const router = useRouter();
 
-  const handleGoToProductDescription = useCallback((id: string) => {
-    router.push(`/products/${id}`);
+  const handleGoToProductDescription = useCallback((handle: string) => {
+    router.push(`/products/${handle}`);
   }, [router]);
 
-  const handleGoToCheckout = useCallback(() => {
-    advanceStep()
+  const handleGoToCheckout = useCallback(async () => {
+    const response = await createCheckout({
+      lineItems: items.map(item => ({
+        variantId: item.variants[0], quantity: item.quantity
+      }))
+    });
 
-    router.push('/pagamento/contato');
-  }, [router, advanceStep]);
+    const url = response?.checkout.webUrl;
+
+    if (!url) {
+      alert('Ocorreu um erro, tente novamente mais tarde.');
+      return;
+    }
+
+    window.location.replace(url);
+  }, [items]);
 
   return (
     <>
@@ -53,7 +65,7 @@ const Cart: React.FC = () => {
                       <Product
                         product={product}
                         additionalTextOnPrice={`${product.quantity}x`}
-                        onClick={() => handleGoToProductDescription(product.id)}
+                        onClick={() => handleGoToProductDescription(product.handle)}
                         className="hover:scale-100 brightness-100 hover:brightness-[90%] shadow-none bg-white rounded-tr-md rounded-tl-md"
                       />
 
