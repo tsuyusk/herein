@@ -87,6 +87,7 @@ export async function getStaticProps(context: GetStaticPropsContext) {
       products: category.products,
       category: category,
     },
+    revalidate: 10
   }
 }
 

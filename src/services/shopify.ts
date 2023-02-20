@@ -42,7 +42,10 @@ export function parseCollection(collection: any): Collection {
 }
 
 export async function getAllProducts(): Promise<ProductModel[]> {
-  const shopifyProducts = await client.query({ query: GET_ALL_PRODUCTS })
+  const shopifyProducts = await client.query({
+    query: GET_ALL_PRODUCTS,
+    fetchPolicy: 'no-cache',
+  })
   return shopifyProducts.data.products.edges.map(parseProduct)
 }
 
@@ -53,7 +56,8 @@ export async function getProductByHandle(
     query: GET_PRODUCT_BY_HANDLE,
     variables: {
       handle
-    }
+    },
+    fetchPolicy: 'no-cache',
   })
 
   return parseProduct(shopifyProduct.data.product)
@@ -72,7 +76,8 @@ export async function getCollectionWithProductsByHandle(
 ): Promise<Collection> {
   const shopifyCollections = await client.query({
     query: GET_ALL_PRODUCTS_FROM_COLLECTION,
-    variables: { handle }
+    variables: { handle },
+    fetchPolicy: 'no-cache',
   })
 
   return parseCollection(shopifyCollections.data.collectionByHandle)
@@ -90,7 +95,8 @@ export async function createCheckout(input: any) {
   return (
     await client.mutate<CreateCheckoutResponse>({
       mutation: CREATE_CHECKOUT,
-      variables: { input }
+      variables: { input },
+    fetchPolicy: 'no-cache',
     })
   ).data?.checkoutCreate
 }
