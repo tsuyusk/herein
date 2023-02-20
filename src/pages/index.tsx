@@ -4,7 +4,10 @@ import Header from "@/components/Header";
 import Product from "@/components/Product";
 import SEO from "@/components/SEO";
 import { products as productsData } from "@/pages/api/data";
-import { parseProducts } from "@/utils/parseProducts";
+import { GET_ALL_PRODUCTS } from "@/apollo/queries/services/shopify";
+import { client } from "@/apollo/client";
+import { getAllProducts } from "@/services/shopify";
+import { parseProduct } from "@/utils/parseProduct";
 import { useRouter } from "next/router";
 import { useCallback } from "react";
 import { Carousel } from 'react-responsive-carousel';
@@ -16,8 +19,8 @@ interface HomeProps {
 export default function Home({ products }: HomeProps) {
   const router = useRouter();
 
-  const handleGoToProductDescription = useCallback((id: string) => {
-    router.push(`/products/${id}`);
+  const handleGoToProductDescription = useCallback((handle: string) => {
+    router.push(`/products/${handle}`);
   }, [router]);
 
   return (
@@ -71,7 +74,7 @@ export default function Home({ products }: HomeProps) {
 }
 
 export async function getServerSideProps() {
-  const products: ProductModel[] = parseProducts(productsData);
+  const products = await getAllProducts();
 
   return {
     props: { products },

@@ -1,18 +1,17 @@
-import { ProductModel, CategoryModel } from '@/@types/models';
+import { ProductModel, CategoryModel, Collection } from '@/@types/models';
 import Footer from '@/components/Footer';
 import Header from '@/components/Header';
 import Product from '@/components/Product';
 import SEO from '@/components/SEO';
-import { parseProducts } from '@/utils/parseProducts';
+import { getAllColectionsNames, getCollectionWithProductsByHandle } from '@/services/shopify';
 import { pickFromObject } from '@/utils/pickFromObject';
 import { GetStaticPropsContext } from 'next';
 import { useRouter } from 'next/router';
 import React, { useCallback } from 'react';
-import { categories, products as productsData } from '../api/data';
 
 interface CategoryProps {
   products: ProductModel[]
-  category: CategoryModel
+  category: Collection
 }
 
 const possibleCategoriesIndexes = {
@@ -33,7 +32,7 @@ const Category: React.FC<CategoryProps> = ({ category, products }) => {
       <SEO title={category.title} />
 
       <div>
-        <Header activeIndex={pickFromObject(possibleCategoriesIndexes, category.slug)} />
+        <Header activeIndex={pickFromObject(possibleCategoriesIndexes, category.handle)} />
 
         <main className="flex justify-center my-9 rounded-lg w-full">
           <div className="max-w-6xl w-full flex justify-between items-center">
@@ -61,9 +60,11 @@ const Category: React.FC<CategoryProps> = ({ category, products }) => {
 
 
 export async function getStaticPaths() {
-  const paths = categories
+  const collections = await getAllColectionsNames();
+
+  const paths = collections
     .map(item => ({
-      params: { category: String(item.slug) },
+      params: { category: String(item.handle) },
     }))
 
   return {
@@ -79,19 +80,12 @@ export async function getStaticProps(context: GetStaticPropsContext) {
     throw new Error('Invalid ID')
   }
 
-
-  const category = categories.find(item => String(item.slug) === paramCategory);
-
-  if (!category) {
-    throw new Error('Invalid ID')
-  }
-
-  const products = parseProducts(productsData.filter(item => item.category === category.slug));
+  const category = await getCollectionWithProductsByHandle(paramCategory);
 
   return {
     props: {
-      products,
-      category,
+      products: category.products,
+      category: category,
     },
   }
 }

@@ -1,12 +1,5 @@
+import { ProductModel } from '@/@types/models';
 import { createContext, useContext, useEffect, useMemo, useState } from 'react';
-
-interface ProductModel {
-  id: string;
-  title: string;
-  description: string;
-  price: number;
-  images: string[];
-}
 
 interface CartItem extends ProductModel {
   quantity: number;

@@ -12,7 +12,7 @@ interface ProductProps {
 const Product: React.FC<ProductProps> = ({ product, additionalTextOnPrice, className = '', onClick }) => {
   const handleClick = useCallback(() => {
     if (onClick) {
-      onClick(product.id);
+      onClick(product.handle);
     }
   }, [onClick, product]);
 

@@ -1,3 +1,5 @@
+import { client } from "@/apollo/client";
+import { ApolloProvider } from "@apollo/client";
 import React from "react"
 import { CartProvider } from "./cart";
 import { CheckoutProvider } from "./checkout";
@@ -10,7 +12,9 @@ export function RootProvider({ children }: RootProviderProps) {
   return (
     <CartProvider>
       <CheckoutProvider>
-        {children}
+        <ApolloProvider client={client}>
+          {children}
+        </ApolloProvider>
       </CheckoutProvider>
     </CartProvider>
   );

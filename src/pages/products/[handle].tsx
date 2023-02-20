@@ -1,14 +1,14 @@
 import { ProductModel } from '@/@types/models';
-import { MdShoppingCart, MdArrowRightAlt, MdLocalShipping, MdShield } from 'react-icons/md';
+import { MdShoppingCart, MdLocalShipping, MdShield } from 'react-icons/md';
 import Header from '@/components/Header';
 import SEO from '@/components/SEO';
-import { products } from '@/pages/api/data';
 import { GetStaticPropsContext } from 'next';
 import React from 'react';
 import { Carousel } from 'react-responsive-carousel';
 import { parsePrice } from '@/utils/parsePrice';
 import { useCart } from '@/hooks/cart';
 import Footer from '@/components/Footer';
+import { getAllProducts, getProductByHandle } from '@/services/shopify';
 
 interface ProductDetailProps {
   product: ProductModel;
@@ -30,13 +30,11 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ product }) => {
               <div className="flex justify-center p-4 bg-white rounded-lg shadow-lg">
                 <div className="w-full md:w-[360px]">
                   <Carousel width="100%" infiniteLoop>
-                    <div>
-                      <img src={product.images[0]} alt={product.title} width={360} />
-                    </div>
-
-                    <div>
-                      <img src={product.images[0]} alt={product.title} width={360} />
-                    </div>
+                    {product.images.map(image => (
+                      <div key={image}>
+                        <img src={image} alt={product.title} width={360} />
+                      </div>
+                    ))}
                   </Carousel>
                 </div>
               </div>
@@ -98,10 +96,12 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ product }) => {
 }
 
 export async function getStaticPaths() {
+  const products = await getAllProducts();
+
   const paths = products
-    .filter((item) => item.id)
+    .filter((item) => item.handle)
     .map((item) => ({
-      params: { id: String(item.id) },
+      params: { handle: String(item.handle) },
     }))
 
   return {
@@ -111,25 +111,13 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps(context: GetStaticPropsContext) {
-  const id = context.params?.id;
+  const handle = context.params?.handle;
 
-  if (!id || typeof id !== 'string') {
-    throw new Error('Invalid ID')
+  if (!handle || typeof handle !== 'string') {
+    throw new Error('Invalid HANDLE')
   }
 
-  const foundProduct = products.find(item => String(item.id) === id);
-
-  if (!foundProduct) {
-    throw new Error('Product invalid');
-  }
-
-  const product: ProductModel = {
-    id: String(foundProduct.id),
-    images: [foundProduct.image],
-    price: foundProduct.price,
-    title: foundProduct.title,
-    description: foundProduct.description,
-  };
+  const product = await getProductByHandle(handle);
 
   return {
     props: { product },
