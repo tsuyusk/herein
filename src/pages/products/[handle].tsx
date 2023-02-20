@@ -1,9 +1,9 @@
+import React, { useCallback } from 'react';
 import { ProductModel } from '@/@types/models';
-import { MdShoppingCart, MdLocalShipping, MdShield } from 'react-icons/md';
+import { MdShoppingCart, MdLocalShipping, MdShield, MdArrowUpward } from 'react-icons/md';
 import Header from '@/components/Header';
 import SEO from '@/components/SEO';
 import { GetStaticPropsContext } from 'next';
-import React from 'react';
 import { Carousel } from 'react-responsive-carousel';
 import { parsePrice } from '@/utils/parsePrice';
 import { useCart } from '@/hooks/cart';
@@ -15,7 +15,17 @@ interface ProductDetailProps {
 }
 
 const ProductDetail: React.FC<ProductDetailProps> = ({ product }) => {
-  const { addItem } = useCart();
+  const { addItem, getCheckoutLink } = useCart();
+
+  const handlePurchase = useCallback(async () => {
+    const url = await getCheckoutLink(product);
+
+    if (!url) {
+      return;
+    }
+
+    window.location.replace(url);
+  }, [getCheckoutLink, product]);
 
   return (
     <>
@@ -57,6 +67,11 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ product }) => {
                 <button onClick={() => addItem(product)} className="bg-white px-3 py-2 flex items-center text-primary rounded-md shadow-lg border-primary border-2 transition-all duration-500 hover:text-white hover:bg-primary">
                   <MdShoppingCart className="mr-1" />
                   Adicionar ao Carrinho
+                </button>
+
+                <button onClick={handlePurchase} className="bg-primary px-3 py-2 flex items-center text-white rounded-md shadow-lg border-primary border-2 transition-all duration-500 brightness-100 hover:brightness-75 mt-4 md:mt-0 md:ml-4">
+                  <MdArrowUpward className="mr-1" />
+                  Comprar
                 </button>
               </div>
 

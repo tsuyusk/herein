@@ -59,7 +59,7 @@ export async function getProductByHandle(
   return parseProduct(shopifyProduct.data.product)
 }
 
-export async function getAllColectionsNames(): Promise<Collection[]> {
+export async function getAllCollectionsNames(): Promise<Collection[]> {
   const shopifyCollections = await client.query({
     query: GET_ALL_COLLECTIONS_NAMES
   })

@@ -11,8 +11,7 @@ import React, { useCallback } from 'react';
 import { MdArrowLeft, MdArrowUpward } from 'react-icons/md';
 
 const Cart: React.FC = () => {
-  const { advanceStep } = useCheckout();
-  const { items, addItem, removeItem, totalPrice } = useCart();
+  const { items, addItem, removeItem, totalPrice, getCheckoutLink } = useCart();
   const router = useRouter();
 
   const handleGoToProductDescription = useCallback((handle: string) => {
@@ -20,13 +19,7 @@ const Cart: React.FC = () => {
   }, [router]);
 
   const handleGoToCheckout = useCallback(async () => {
-    const response = await createCheckout({
-      lineItems: items.map(item => ({
-        variantId: item.variants[0], quantity: item.quantity
-      }))
-    });
-
-    const url = response?.checkout.webUrl;
+    const url = await getCheckoutLink();
 
     if (!url) {
       alert('Ocorreu um erro, tente novamente mais tarde.');
@@ -34,7 +27,7 @@ const Cart: React.FC = () => {
     }
 
     window.location.replace(url);
-  }, [items]);
+  }, [getCheckoutLink]);
 
   return (
     <>

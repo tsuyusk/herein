@@ -1,5 +1,6 @@
 import { ProductModel } from '@/@types/models';
-import { createContext, useContext, useEffect, useMemo, useState } from 'react';
+import { createCheckout } from '@/services/shopify';
+import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 
 interface CartItem extends ProductModel {
   quantity: number;
@@ -12,6 +13,7 @@ interface CartContextType {
   addItem: (item: ProductModel) => void;
   removeItem: (item: CartItem) => void;
   clearCart: () => void;
+  getCheckoutLink: (product?: ProductModel) => Promise<string | undefined>;
 }
 
 const CART_STORAGE_KEY = '@herein/cart';
@@ -91,6 +93,21 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
     return items.reduce((acc, cur) => acc + (cur.price * cur.quantity), 0);
   }, [items]);
 
+  const getCheckoutLink = useCallback(async (product?: ProductModel) => {
+    const lineItemsData =
+      product
+        ? [{ ...product, quantity: 1 }]
+        : items
+
+    const response = await createCheckout({
+      lineItems: lineItemsData.map(item => ({
+        variantId: item.variants[0], quantity: item.quantity
+      }))
+    });
+
+    return response?.checkout.webUrl;
+  }, [items]);
+
   const contextValue: CartContextType = {
     items,
     addItem,
@@ -98,6 +115,7 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
     clearCart,
     amountOfItems,
     totalPrice,
+    getCheckoutLink,
   };
 
   return <CartContext.Provider value={contextValue}>{children}</CartContext.Provider>;

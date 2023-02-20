@@ -3,7 +3,7 @@ import Footer from '@/components/Footer';
 import Header from '@/components/Header';
 import Product from '@/components/Product';
 import SEO from '@/components/SEO';
-import { getAllColectionsNames, getCollectionWithProductsByHandle } from '@/services/shopify';
+import { getAllCollectionsNames, getCollectionWithProductsByHandle } from '@/services/shopify';
 import { pickFromObject } from '@/utils/pickFromObject';
 import { GetStaticPropsContext } from 'next';
 import { useRouter } from 'next/router';
@@ -60,7 +60,7 @@ const Category: React.FC<CategoryProps> = ({ category, products }) => {
 
 
 export async function getStaticPaths() {
-  const collections = await getAllColectionsNames();
+  const collections = await getAllCollectionsNames();
 
   const paths = collections
     .map(item => ({
